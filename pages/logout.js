@@ -1,12 +1,10 @@
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
-import { signOut , useSession } from 'next-auth/client'
-import { Load, isLoad } from '../components/Load'
+import { destroyCookie } from 'nookies'
+import { useRouter } from 'next/router'
 
 export default function Logout() {
-  const [session, loading] = useSession()
-
-  if (isLoad(session, loading, true)) return <Load />
+  const router = useRouter()
 
   return (
     <>
@@ -20,7 +18,8 @@ export default function Logout() {
           variant="warning"
           type="submit"
           onClick={() => {
-            signOut({ callbackUrl: '/' })
+            destroyCookie(null, 'auth')
+            router.push('/')
           }}
         >
           Logout

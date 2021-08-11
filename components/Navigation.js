@@ -1,13 +1,12 @@
-import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/client'
+import { parseCookies } from 'nookies'
 
 export default function Navigation() {
-  const [session, loading] = useSession()
   const router = useRouter()
+  const { auth } = parseCookies()
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -18,7 +17,7 @@ export default function Navigation() {
           <Link href="/post">
             <div className={`${(router.asPath.includes('/post') && router.asPath !== '/post/new') && 'active'} nav-link`}>Browse</div>
           </Link>
-          {session
+          {auth
             ?
             <>
               <Link href="/post/new">

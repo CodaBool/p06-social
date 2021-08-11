@@ -6,12 +6,10 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useRouter } from 'next/router'
-import { csrfToken, signIn, useSession } from 'next-auth/client'
-import { Load, isLoad } from '../components/Load'
 import SampleModal from '../components/SampleModal'
+import { setCookie } from 'nookies'
 
-export default function Login({ csrfToken }) {
-  const [ session, loading ] = useSession()
+export default function Login() {
   const [error, setError] = useState(false)
   const router = useRouter()
   const { handleSubmit, errors, control, register } = useForm()
@@ -19,20 +17,15 @@ export default function Login({ csrfToken }) {
   useEffect(() => router.query.error && setError(true), [router.query.error])
 
   const onSubmit = (data) => {
-    console.log('token', csrfToken)
-    if (data.email && data.password && csrfToken) {
-
-      const callback = router.query.callbackUrl || ''
-      signIn('credentials', { email: data.email, password: data.password, callbackUrl: callback })
-    }
-  }
-
-  if (session) {
+    setCookie(null, 'auth', {maxAge: 604800, path: '/'})
     router.push('/post')
-    return <Load />
+    // console.log('token', csrfToken)
+    // if (data.email && data.password && csrfToken) {
+
+    //   const callback = router.query.callbackUrl || ''
+    //   signIn('credentials', { email: data.email, password: data.password, callbackUrl: callback })
+    // }
   }
-  
-  if (isLoad(session, loading, false)) return <Load />
 
   return (
     <Row>
@@ -70,7 +63,6 @@ export default function Login({ csrfToken }) {
               name="email"
               defaultValue=""
               placeholder="name@example.com"
-              required
             />
           </Form.Group>
           <Form.Group>
@@ -83,26 +75,16 @@ export default function Login({ csrfToken }) {
               name="password"
               placeholder="Password" 
               defaultValue=""
-              required
-              rules={{
-                minLength: 8 // sets rule pass >= 8
-              }}
             />
             {errors.password && <p className="errMsg">Your password must be at least 8 characters</p>}
           </Form.Group>
           <Row>
-            <Button className="mx-auto mt-5" style={{width: "40%"}} variant="primary" type="submit">Login</Button>
+            <Button className="mx-auto mt-5" style={{width: "40%"}} variant="success" type="submit">Skip Login</Button>
           </Row>
-          <p className="my-5 text-center signupText" onClick={() => router.push(`/signup`)}>New Here? Create Account Now.</p>
+          {/* <p className="my-5 text-center signupText" onClick={() => router.push(`/signup`)}>New Here? Create Account Now.</p> */}
         </Form>
       </Col>
       <SampleModal />
     </Row>
   )
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: { csrfToken: await csrfToken(context) }
-  }
 }
