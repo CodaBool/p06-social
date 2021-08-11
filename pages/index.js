@@ -13,18 +13,11 @@ export default function Login() {
   const [error, setError] = useState(false)
   const router = useRouter()
   const { handleSubmit, errors, control, register } = useForm()
-
   useEffect(() => router.query.error && setError(true), [router.query.error])
 
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     setCookie(null, 'auth', {maxAge: 604800, path: '/'})
     router.push('/post')
-    // console.log('token', csrfToken)
-    // if (data.email && data.password && csrfToken) {
-
-    //   const callback = router.query.callbackUrl || ''
-    //   signIn('credentials', { email: data.email, password: data.password, callbackUrl: callback })
-    // }
   }
 
   return (
@@ -81,7 +74,6 @@ export default function Login() {
           <Row>
             <Button className="mx-auto mt-5" style={{width: "40%"}} variant="success" type="submit">Skip Login</Button>
           </Row>
-          {/* <p className="my-5 text-center signupText" onClick={() => router.push(`/signup`)}>New Here? Create Account Now.</p> */}
         </Form>
       </Col>
       <SampleModal />

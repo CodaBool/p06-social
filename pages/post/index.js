@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Post from '../../components/Post'
 import data from '../../constants/data.json'
-import axios from 'axios'
-import { format } from 'timeago.js'
 
 export default function Posts() {
   const [posts, setPosts] = useState(data)
-
-  useEffect(() => {
-    // axios.get('/api/post')
-    //   .then(res => {
-    //     setPosts(res.data)
-    //     console.log(res.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log("error", err)
-    //   })
-  }, [])
 
   return (
     <>

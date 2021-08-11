@@ -7,9 +7,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
-import axios from "axios"
 import { Plus } from 'react-bootstrap-icons'
-// import bsCustomFileInput from 'bs-custom-file-input'
 
 export default function NewPost() {
   const { handleSubmit, control, register } = useForm()
@@ -17,31 +15,7 @@ export default function NewPost() {
 
   const onSubmit = (data) => {
     setShow(true)
-    // const formData = new FormData();
-    // formData.append('imagePost', data.postImage[0])
-    // formData.append('imagePerson', data.imagePerson[0])
-    // formData.append('title', data.title);
-    // formData.append('firstName', data.firstName);
-    // formData.append('lastName', data.lastName);
-    // formData.append('email', data.email);
-    // formData.append('alias', data.alias);
-    // formData.append('age', data.age);
-    // formData.append('lastLocation', data.lastLocation);
-    // formData.append('type', data.type);
-    // formData.append('status', data.status);
-
-    // axios.post('/api/post', formData, config)
-    //   .then((res) => {
-    //     console.log(res)
-    //     history.push(`/posts`)
-    //   })
-    //   .catch((err) => {
-    //     alert(err)
-    //   })
   }
-  useEffect(() => {
-    // bsCustomFileInput.init()
-  }, [])
   
   return (
     <>
