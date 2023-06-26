@@ -1,5 +1,5 @@
 # Senior Project
-## A sample of this project can be see [here](http://p06-social-sample.s3-website-us-east-1.amazonaws.com)
+## A sample of this project can be see [here](http://p6.codabool.com)
 This application was a team effort. 
 This is not the original application, it has since been translated over into Nextjs. 
 The original was a React application with a Express backend and was hosted on Heroku. 
