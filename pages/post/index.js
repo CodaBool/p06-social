@@ -21,7 +21,7 @@ export default function Posts() {
   return (
     <>
       <h1 className="display-3">Latest Posts</h1>
-      <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+      <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "center"}}>
         {posts.map((post) => 
           <Post
             title={post.title}

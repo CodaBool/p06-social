@@ -34,17 +34,20 @@ export default function NewComments({ id, setCommentsLoaded, scrollToTop }) {
       })
   }, [id, setCommentsLoaded])
   
-  function onSubmit(e) {
-    e.preventDefault()
-    axios.post('/api/comment', {postId: id, body: comment.current.value, createdBy: 'Placeholder'})
-      .then(res => {
-        comment.current.value = '' // clear comment input
-        fetchComments() // inefficiently replace comment array
-        scrollToTop(true)
-      })
-      .catch((err) => {
-        console.log("error", err)
-      })
+  // function onSubmit(e) {
+  //   e.preventDefault()
+  //   axios.post('/api/comment', {postId: id, body: comment.current.value, createdBy: 'Placeholder'})
+  //     .then(res => {
+  //       comment.current.value = '' // clear comment input
+  //       fetchComments() // inefficiently replace comment array
+  //       scrollToTop(true)
+  //     })
+  //     .catch((err) => {
+  //       console.log("error", err)
+  //     })
+  // }
+  const onSubmit = (data) => {
+    window.alert('This is a sample, comments cannot be made at this time.')
   }
   function refreshComments() {
     setSpin('spin')

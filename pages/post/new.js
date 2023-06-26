@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Form from 'react-bootstrap/Form'
 import Accordion from 'react-bootstrap/Accordion'
+import InputGroup from 'react-bootstrap/InputGroup'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import Dropdown from 'react-bootstrap/Dropdown'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Modal from 'react-bootstrap/Modal'
@@ -13,10 +15,10 @@ import { Plus } from 'react-bootstrap-icons'
 
 export default function NewPost() {
   const { handleSubmit, control, register } = useForm()
-  const [show, setShow] = useState(false)
+  // const [show, setShow] = useState(false)
 
   const onSubmit = (data) => {
-    setShow(true)
+    window.alert('This is a sample, no posts can be made at this time.')
     // const formData = new FormData();
     // formData.append('imagePost', data.postImage[0])
     // formData.append('imagePerson', data.imagePerson[0])
@@ -46,7 +48,7 @@ export default function NewPost() {
   return (
     <>
       {/* Modal informing about test payment info */}
-      <Modal show={show} onHide={() => setShow(false)}>
+      {/* <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>This is a Test Environment</Modal.Title>
         </Modal.Header>
@@ -57,146 +59,77 @@ export default function NewPost() {
         <Modal.Footer>
           <p>Thanks for visiting!</p>
         </Modal.Footer>
-      </Modal >
+      </Modal > */}
 
       {/* Form */}
       <h1 className="display-4 my-4">Create New Post</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Accordion defaultActiveKey="0" className="wave">
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              Basic Info <Plus size={25}/>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <Form.Group>
+
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Basic Info <Plus size={25}/></Accordion.Header>
+          <Accordion.Body>
+          <Card.Body>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Title</Form.Label>
-                  <Controller 
-                    as={<Form.Control />} 
-                    control={control} 
-                    type="text"
-                    name="title"
-                    defaultValue=""
-                    placeholder="Title"
-                    required
-                  />
+                  <Form.Control placeholder="title" />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Description</Form.Label>
-                  <Controller 
-                    as={<Form.Control as="textarea" />} 
-                    control={control} 
-                    name="description"
-                    rows="5"
-                    defaultValue=""
-                    placeholder="Description"
-                    required
-                  />
+                  <Form.Control placeholder="description" />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Image</Form.Label>
-                  <Form.File 
-                    label="Post Image"
-                    custom
-                    name="postImage"
-                    ref={register}
-                  />
+                  <Form.Control type="file" />
                 </Form.Group>
               </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
-              Person <Plus size={25} className="" />
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                <Form.Label>Name</Form.Label>
-                <Row>
-                  <Col>
-                    <Form.Group>
-                      <Controller 
-                        as={<Form.Control />} 
-                        control={control}
-                        name="firstName"
-                        defaultValue=""
-                        placeholder="First name" 
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Controller 
-                        as={<Form.Control />} 
-                        control={control}
-                        name="lastName"
-                        defaultValue=""
-                        placeholder="Last name" 
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Controller 
-                    as={<Form.Control />} 
-                    control={control} 
-                    name="email"
-                    defaultValue=""
-                    placeholder="Email"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Alias</Form.Label>
-                  <Controller 
-                    as={<Form.Control />} 
-                    control={control} 
-                    name="alias"
-                    defaultValue=""
-                    placeholder="Alias"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Age</Form.Label>
-                  <Controller 
-                    as={<Form.Control />} 
-                    control={control} 
-                    name="age"
-                    defaultValue=""
-                    placeholder="Age"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Last Location</Form.Label>
-                  <Controller 
-                    as={<Form.Control />} 
-                    control={control} 
-                    name="lastLocation"
-                    defaultValue=""
-                    placeholder="Last Location"
-                  />
-                </Form.Group>
-                <Form.Label>Type</Form.Label>
-                <select className="form-control" ref={register} defaultValue="" name="type">
-                  {['Sex Worker', 'Trafficker', 'Missing Person'].map((option, index) => <option key={index}>{option}</option>)}
-                </select>
-                <Form.Label>Status</Form.Label>
-                <select className="form-control" ref={register} defaultValue="" name="status">
-                  {['Active', 'Inactive', 'Deceased', 'Missing'].map((option, index) => <option key={index}>{option}</option>)}
-                </select>
-                <Form.Group>
-                  <Form.Label>Image </Form.Label>
-                  <Form.File 
-                    label="Post Image"
-                    custom
-                    name="imagePerson"
-                    ref={register}
-                  />
-                </Form.Group>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+          </Accordion.Body>
+        </Accordion.Item>
+        <Accordion.Item eventKey="1">
+          <Accordion.Header>Person <Plus size={25} className="" /></Accordion.Header>
+          <Accordion.Body>
+
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Name</Form.Label>
+            <Form.Control placeholder="title" />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Email</Form.Label>
+            <Form.Control placeholder="email" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Age</Form.Label>
+            <Form.Control placeholder="age" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Last Location</Form.Label>
+            <Form.Control placeholder="location" />
+          </Form.Group>
+          <Form.Select aria-label="Default select example">
+            <option>Type</option>
+            <option value="1">Sex Worker</option>
+            <option value="2">Trafficker</option>
+            <option value="3">Missing Person</option>
+          </Form.Select>
+
+          <Form.Select aria-label="Default select example">
+            <option>Status</option>
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+            <option value="3">Deceased</option>
+            <option value="4">Missing</option>
+          </Form.Select>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Image</Form.Label>
+            <Form.Control type="file" />
+          </Form.Group>
+
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
+
         <Row >
           <Button className="mx-auto my-5" style={{width: "20%"}} variant="primary" type="submit">Submit</Button>
         </Row>

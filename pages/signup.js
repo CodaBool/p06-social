@@ -5,16 +5,13 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import { Map, PersonBadge, Envelope, Person, GeoAlt, Key } from 'react-bootstrap-icons'
-import bcrypt from 'bcryptjs'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import axios from "axios"
-import ReCAPTCHA from "react-google-recaptcha"
+// import ReCAPTCHA from "react-google-recaptcha"
 import Toast from '../components/Toast'
-import { signIn, useSession } from 'next-auth/client'
-import { Load, isLoad } from '../components/Load'
 import { useRouter } from 'next/router'
 
 export default function Signup() {
@@ -22,51 +19,25 @@ export default function Signup() {
   const [success, setSuccess] = useState(false)
   const [show, setShow] = useState(false)
   const captcha = useRef(null)
-  const [session, loading] = useSession()
   const { handleSubmit, watch, errors, control, getValues } = useForm()
   const router = useRouter()
 
+  // const onSubmit = (data) => {
+  //   if (data.password !== data.passwordConfirm) return
+  //   if (data.email && data.password) {
+  //     const callbackUrl = router.query.callbackUrl || ''
+  //     window.alert('This is a sample, authentication is unecessary.')
+  //   }
+  // }
+
   const onSubmit = (data) => {
-    const token = captcha.current.getValue()
-    // if (true) { // TODO: reset this 
-    if (token !== "") {
-      bcrypt.hash(data.password, 10, function(err, hash) {
-        axios.post('/api/rest/postUser', {
-          email: data.email,
-          name: data.firstName + ' ' + data.lastName,
-          token: token,
-          password: hash,
-          joined: new Date(),
-          updated: new Date()
-        })
-          .then(res => {
-            setSuccess(true)
-            signIn('credentials', { email: data.email, password: data.password, callbackUrl: '' })
-          })
-          .catch(err => {
-            if (err.response.data === 'Duplicate Stripe Email' || err.response.data === 'Cannot Create PG User') {
-              setShow(true)
-            } else {
-              console.log(err.response.data)
-            }
-          })
-          .finally(
-            captcha.current.reset()
-          )
-      })
-    }
+    window.alert('This is a sample, authentication is unecessary.')
   }
   useEffect(() => {
     setPassword(watch('password'))
   }, [watch])
 
-  if (isLoad(session, loading) || success) return <Load />
-
-  if (session) {
-    router.push('/post')
-  }
-
-  // console.log("Errors", errors)
+  // if (isLoad(session, loading) || success) return <Load />
 
   return (
     <>
@@ -161,7 +132,7 @@ export default function Signup() {
               minLength: 8 // sets rule pass >= 8
             }}
           />
-          {errors.password && <p className="errMsg">Your password must be at least 8 characters</p>}
+          {errors?.password && <p className="errMsg">Your password must be at least 8 characters</p>}
         </Form.Group>
         {password && <PasswordStrengthBar password={password} className={`${password.length === 0 ? 'fadeOut' : 'fadeIn'}`}/>}
         <Form.Group>
@@ -181,14 +152,14 @@ export default function Signup() {
               }
             }}
           />
-          {errors.confirmPass && <p className="errMsg">Your password must match</p>}
+          {errors?.confirmPass && <p className="errMsg">Your password must match</p>}
         </Form.Group>
         <Row >
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             className="mx-auto mt-3"
             sitekey="6LfYhw0aAAAAANDCPhmW-uWwN6shEUvs31Jof6TT"
             ref={captcha}
-          />
+          /> */}
           <Button className="mx-auto my-5" style={{width: "40%"}} variant="primary" type="submit">Create Account</Button>
         </Row>
       </Form>

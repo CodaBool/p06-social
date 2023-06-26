@@ -2,10 +2,10 @@ import '../global.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Head from 'next/head'
 import Container from 'react-bootstrap/Container'
-import { Provider } from 'next-auth/client'
+// import { Provider } from 'next-auth/client'
 import Navigation from '../components/Navigation'
-import NavBox from '../components/NavBox'
-// import Footer from '../components/Footer'
+// import SimpleNavBox from '../components/SimpleNavBox'
+import Footer from '../components/Footer'
 
 // reduces flicker https://github.com/rnosov/react-reveal#server-side-rendering
 // import config from 'react-reveal/globals'
@@ -13,7 +13,7 @@ import NavBox from '../components/NavBox'
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <Provider session={pageProps.session}>
+    <>
       <Head>
         <title>Trafficking Spotters</title>
         <meta charSet="UTF-8" />
@@ -22,13 +22,15 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="icon" type="image" sizes="16x16" href="/icons/favicon-16x16.gif" />
       </Head>
       <Navigation />
-      <main>
-        <Container>
-          <Component {...pageProps} />
-          <NavBox />
-        </Container>
-      </main>
-      {/* <Footer /> */}
-    </Provider>
+      <div id="page-container">
+        <main>
+          <Container>
+            <Component {...pageProps} />
+            {/* <SimpleNavBox /> */}
+          </Container>
+        </main>
+        <Footer />
+      </div>
+    </>
   )
 }

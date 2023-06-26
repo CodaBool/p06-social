@@ -3,12 +3,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/client'
 
 export default function Navigation() {
-  const [session, loading] = useSession()
   const router = useRouter()
-
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand onClick={() => router.push('/post')}>Spotters</Navbar.Brand>
@@ -18,7 +15,7 @@ export default function Navigation() {
           <Link href="/post">
             <div className={`${(router.asPath.includes('/post') && router.asPath !== '/post/new') && 'active'} nav-link`}>Browse</div>
           </Link>
-          {session
+          {true
             ?
             <>
               <Link href="/post/new">

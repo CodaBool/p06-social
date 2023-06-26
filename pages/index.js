@@ -6,12 +6,9 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useRouter } from 'next/router'
-import { csrfToken, signIn, useSession } from 'next-auth/client'
-import { Load, isLoad } from '../components/Load'
 import SampleModal from '../components/SampleModal'
 
-export default function Login({ csrfToken }) {
-  const [ session, loading ] = useSession()
+export default function Login() {
   const [error, setError] = useState(false)
   const router = useRouter()
   const { handleSubmit, errors, control, register } = useForm()
@@ -19,22 +16,11 @@ export default function Login({ csrfToken }) {
   useEffect(() => router.query.error && setError(true), [router.query.error])
 
   const onSubmit = (data) => {
-    console.log('token', csrfToken)
-    if (data.email && data.password && csrfToken) {
-
-      const callback = router.query.callbackUrl || ''
-      signIn('credentials', { email: data.email, password: data.password, callbackUrl: callback })
-    }
+    window.alert('This is a sample, authentication is unecessary.')
   }
-
-  if (session) {
-    router.push('/post')
-    return <Load />
-  }
-  
-  if (isLoad(session, loading, false)) return <Load />
 
   return (
+    <>
     <Row>
       <Col>
         <img src="/image/login-header.jpg" className="mt-3 w-100" />
@@ -88,7 +74,7 @@ export default function Login({ csrfToken }) {
                 minLength: 8 // sets rule pass >= 8
               }}
             />
-            {errors.password && <p className="errMsg">Your password must be at least 8 characters</p>}
+            {errors?.password && <p className="errMsg">Your password must be at least 8 characters</p>}
           </Form.Group>
           <Row>
             <Button className="mx-auto mt-5" style={{width: "40%"}} variant="primary" type="submit">Login</Button>
@@ -96,13 +82,8 @@ export default function Login({ csrfToken }) {
           <p className="my-5 text-center signupText" onClick={() => router.push(`/signup`)}>New Here? Create Account Now.</p>
         </Form>
       </Col>
-      <SampleModal />
     </Row>
+    <SampleModal />
+    </>
   )
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: { csrfToken: await csrfToken(context) }
-  }
 }

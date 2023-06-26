@@ -1,13 +1,8 @@
 import React from 'react'
-import { useSession } from 'next-auth/client'
-import { Load, isLoad } from '../components/Load'
-import { quickUser } from '../lib/helper'
-import { format } from 'timeago.js'
 
-export default function Account({ user }) {
-  const [session, loading] = useSession()
+export default function Account() {
 
-  if (isLoad(session, loading, true)) return <Load />
+  // if (isLoad(session, loading, true)) return <Load />
 
   return (
     <>
@@ -17,17 +12,17 @@ export default function Account({ user }) {
       </div>
       
       <div>
-        <p>Name: {user.name}</p>
-        <p>{user.email}</p>
-        <p>Active: {user.active ? 'true' : 'false'}</p>
-        <p>Joined: {format(user.joined)}</p>
-        <p>Updated: {format(user.updated)}</p>
+        <p>Name: Jon Smith</p>
+        <p>jonsmith@mail.com</p>
+        <p>Active: true</p>
+        <p>Joined: 2023-05-05</p>
+        <p>Updated: 2023-05-05</p>
       </div>
     </>
   )
 }
 
-export async function getServerSideProps(context) {
-  const user = await quickUser(context)
-  return { props: { user }}
-}
+// export async function getServerSideProps(context) {
+//   const user = await quickUser(context)
+//   return { props: { user }}
+// }
